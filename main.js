@@ -3,6 +3,11 @@ let bestSentenceP = document.getElementById("best-sentence");
 let sentencesP = document.getElementById("other-sentences");
 let genIndicator = document.getElementById("gen-indicator");
 
+let genSizeINP = document.getElementById("gen-size")
+let mutRateINP = document.getElementById("mut-rate")
+let mutChanceINP = document.getElementById("mut-chance")
+let repeatINP = document.getElementById("auto-gen")
+
 let genNum = 0;
 let sentences = [];
 let bestSentence = "";
@@ -10,6 +15,9 @@ let bestSentence = "";
 let sentenceToMatch = "To be or not to be...";
 
 let sampleSize = 10000;
+let mutRate = 1;
+let mutChance = 1;
+let repeat = false;
 
 function getRandomLetter() {
     let letterNum = 32 + Math.floor(Math.random() * 94);
@@ -64,25 +72,32 @@ function onSentenceEntered() {
 
 function generate() {
     if (bestSentence === sentenceToMatch) {return;}
+    repeat = repeatINP.checked
+    mutChance = Math.round(mutChanceINP.value/100);
+    mutRate = mutRateINP.value;
+    sampleSize = genSizeINP.value;
+    console.log(repeat);
     sentences = [];
     if (genNum > 0) {
         for (let i=0; i<sampleSize; i++) {
-            let newSentence = bestSentence;
+            for (let j=0; j<mutRate; j++) {
+                let newSentence = bestSentence;
 
-            let changeLength = Math.floor(Math.random() * 100) < 25;
-            let changeLetter = Math.floor(Math.random() * 100) < 75;
-            if (changeLetter) {
-                let letterToChange = Math.floor(Math.random() * newSentence.length);
-                let sentenceArray = newSentence.split("");
-                sentenceArray[letterToChange] = getRandomLetter();
-                newSentence = sentenceArray.join("");
+                let changeLength = Math.floor(Math.random() * 100) < 25 * mutChance;
+                let changeLetter = Math.floor(Math.random() * 100) < 75 * mutChance;
+                if (changeLetter) {
+                    let letterToChange = Math.floor(Math.random() * newSentence.length);
+                    let sentenceArray = newSentence.split("");
+                    sentenceArray[letterToChange] = getRandomLetter();
+                    newSentence = sentenceArray.join("");
+                }
+                if (changeLength) {
+                    let direction = Math.floor(Math.random() * 2);
+                    if (direction === 0) {newSentence = newSentence.substring(0, newSentence.length - 1);}
+                    else if (direction === 1) {newSentence = newSentence + getRandomLetter()};
+                }
+                sentences.push(newSentence);
             }
-            if (changeLength) {
-                let direction = Math.floor(Math.random() * 2);
-                if (direction === 0) {newSentence = newSentence.substring(0, newSentence.length - 1);}
-                else if (direction === 1) {newSentence = newSentence + getRandomLetter()};
-            }
-            sentences.push(newSentence);
         }
     }
     else {
@@ -100,5 +115,8 @@ function generate() {
     let top = getBest();
     bestSentence = top[0].slice(0, Math.round(top[0].length/2)) + top[1].slice(Math.round(top[1].length/2, top[1].length));
     bestSentenceP.textContent = bestSentence;
+    if (repeat) {
+        generate()
+    }
     //sentencesP.textContent = sentences.join(" ; ")
 }
