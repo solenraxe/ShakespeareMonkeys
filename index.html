@@ -4,20 +4,37 @@
         <meta charset="utf-8">
         <title>Shakespeare's Monkeys</title>
         <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="icon" href="icon.png">
     </head>
     <body>
         <h1>Shakespeare's Infinite Monkeys</h1>
-        <label for="phrase-input">Enter your phrase here :</label>
-        <input type="text" id="phrase-input" placeholder="To be or not to be..."><br>
-        <button class="button" id="confirm-phrase" onclick="onSentenceEntered()">Confirm</button><br><br>
-        <button class="button" id="start" onclick="generate()">Generate...</button>
-        <div id="monkeys-sentences">
-            <p id="gen-indicator">
-                Generation 0
-            </p>
-            The monkeys have typed :
-            <p id="best-sentence">"You're not shakespeare"</p>
-            <p id="other-sentences"></p>
+
+        <div id="main">
+            <label for="phrase-input">Enter your phrase here :</label>
+            <input class="inputs" type="text" id="phrase-input" placeholder="To be or not to be..."><br>
+            <button class="button" id="confirm-phrase" onclick="onSentenceEntered()">Confirm</button><br><br>
+            <button class="button" id="start" onclick="generate()">Generate...</button>
+            <div id="monkeys-sentences">
+                <p id="gen-indicator">
+                    Generation 0
+                </p>
+                The monkeys have typed :
+                <p id="best-sentence">"You're not shakespeare"</p>
+                <p id="other-sentences"></p>
+            </div>
+        </div>
+        
+        <div id="parameters-div">
+            <label for="gen-size">Generation Size (n) :</label>
+            <input class="inputs" type="number" id="gen-size" placeholder="10000" min="0" value="10000"><br>
+            <label for="mut-rate">Mutation Rate (n) :</label>
+            <input class="inputs" type="number" id="mut-rate" placeholder="1" min="0" value="1"><br>
+            <label for="mut-chance">Mutation Chance (%) :</label>
+            <input class="inputs" type="number" id="mut-chance" placeholder="100" min="1" max="400" value="100"><br>
+            <div>
+                <label for="auto-gen">Automatic Generations</label>
+                <input class="checkbox" type="checkbox" id="auto-gen"><br>
+            </div>
         </div>
     </body>
     <script src="main.js"></script>
