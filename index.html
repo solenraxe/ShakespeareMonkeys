@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Shakespeare's Monkeys</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <h1>Shakespeare's Infinite Monkeys</h1>
+        <label for="phrase-input">Enter your phrase here :</label>
+        <input type="text" id="phrase-input" placeholder="To be or not to be..."><br>
+        <button class="button" id="confirm-phrase" onclick="onSentenceEntered()">Confirm</button><br><br>
+        <button class="button" id="start" onclick="generate()">Generate...</button>
+        <div id="monkeys-sentences">
+            <p id="gen-indicator">
+                Generation 0
+            </p>
+            The monkeys have typed :
+            <p id="best-sentence">"You're not shakespeare"</p>
+            <p id="other-sentences"></p>
+        </div>
+    </body>
+    <script src="main.js"></script>
+</html>
