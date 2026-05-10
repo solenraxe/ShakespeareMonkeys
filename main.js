@@ -7,6 +7,7 @@ let genSizeINP = document.getElementById("gen-size")
 let mutRateINP = document.getElementById("mut-rate")
 let mutChanceINP = document.getElementById("mut-chance")
 let repeatINP = document.getElementById("auto-gen")
+let lengthWeightINP = document.getElementById("length-weight")
 
 let genNum = 0;
 let sentences = [];
@@ -17,7 +18,12 @@ let sentenceToMatch = "To be or not to be...";
 let sampleSize = 10000;
 let mutRate = 1;
 let mutChance = 1;
+let lengthWeight = 100;
 let repeat = false;
+
+function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
 
 function getRandomLetter() {
     let letterNum = 32 + Math.floor(Math.random() * 94);
@@ -38,7 +44,7 @@ function getBest() {
         let score = 0;
         let sentence = sentences[i];
         let lengthDiff = Math.abs(sentence.length - sentenceToMatch.length);
-        score -= lengthDiff;
+        score -= lengthDiff * lengthWeight/100;
         let iterationLength = Math.min(sentence.length, sentenceToMatch.length);
         for (let j=0; j<iterationLength; j++) {
             if (sentence[j] === sentenceToMatch[j]) {
@@ -76,7 +82,7 @@ function generate() {
     mutChance = Math.round(mutChanceINP.value/100);
     mutRate = mutRateINP.value;
     sampleSize = genSizeINP.value;
-    console.log(repeat);
+    lengthWeight = lengthWeightINP.value
     sentences = [];
     if (genNum > 0) {
         for (let i=0; i<sampleSize; i++) {
@@ -116,7 +122,7 @@ function generate() {
     bestSentence = top[0].slice(0, Math.round(top[0].length/2)) + top[1].slice(Math.round(top[1].length/2, top[1].length));
     bestSentenceP.textContent = bestSentence;
     if (repeat) {
-        generate()
+        delay(100).then(() => generate());
     }
     //sentencesP.textContent = sentences.join(" ; ")
 }
