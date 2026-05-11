@@ -1,4 +1,6 @@
 # ShakespeareMonkeys
+Tech Stack : HTML, CSS and JavaScript
+
 You force monkeys to type, those who do well survive and reproduce, the others die.
 You first have to give a phrase, then click "Confirm". After that, the monkeys can start typing. Each time you click "Generate...", 10,000 monkeys get to work and type. At first, they type random sentences, but some of them are closer to yours than others, so you decide to have them make 10,000 children and have those children type instead.
 Each generation, the monkeys grow closer and closer to your sentence, until finally, one day, a monkey manages to perfectly type your sentence.
